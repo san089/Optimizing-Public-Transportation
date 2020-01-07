@@ -1,0 +1,11 @@
+{
+  "namespace": "com.udacity",
+  "type": "record",
+  "name": "turnstile.key",
+  "fields": [
+    {
+      "name": "timestamp",
+      "type": "long"
+    }
+  ]
+}
