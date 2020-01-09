@@ -40,7 +40,7 @@ class Producer:
         self.broker_properties = {
             "ZOOKEEPER_URL" : "localhost:2181",
             "BROKER_URL" : "localhost:9092",
-            "SCHEMA_REGISTRY_URL" : "localhost:8081"
+            "SCHEMA_REGISTRY_URL" : "http://localhost:8081"
         }
 
         # If the topic does not already exist, try to create it
@@ -53,8 +53,8 @@ class Producer:
             'bootstrap.servers': self.broker_properties.get("BROKER_URL"),
             'schema.registry.url' : self.broker_properties.get("SCHEMA_REGISTRY_URL")
             },
-            default_key_schema=self.key_schema, 
-            default_value_schema=self.value_schema
+            default_key_schema=key_schema, 
+            default_value_schema=value_schema
         )
 
     def create_topic(self):
@@ -105,7 +105,7 @@ class Producer:
         #
         #
         
-        
+        self.producer.close()
         logger.info("producer close incomplete - skipping")
 
     def time_millis(self):
@@ -113,4 +113,3 @@ class Producer:
         return int(round(time.time() * 1000))
 
     
-p = Producer("test", None)

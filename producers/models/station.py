@@ -37,7 +37,7 @@ class Station(Producer):
         # replicas
         #
         #
-        topic_name = f"{station_name}" # TODO: Come up with a better topic name
+        topic_name = f"station.{station_name}" # TODO: Come up with a better topic name
         super().__init__(
             topic_name,
             key_schema=Station.key_schema,
@@ -65,18 +65,24 @@ class Station(Producer):
         # TODO: Complete this function by producing an arrival message to Kafka
         #
         #
-        logger.info("arrival kafka integration incomplete - skipping")
+        
         self.producer.produce(
             topic=self.topic_name,
+            key_schema = Station.key_schema,
+            value_schema =Station.value_schema,
             key={"timestamp": self.time_millis()},
             value={
-                #
-                #
-                # TODO: Configure this
-                #
-                #
+                "station_id" : self.station_id,
+                "train_id" : train,
+                "direction" : direction,
+                "line" : self.color.name,
+                "train_status" : "Normal",
+                "prev_station_id" : prev_station_id,
+                "prev_direction" : prev_direction
             },
         )
+        
+        #logger.info("arrival kafka integration incomplete - skipping")
 
     def __str__(self):
         return "Station | {:^5} | {:<30} | Direction A: | {:^5} | departing to {:<30} | Direction B: | {:^5} | departing to {:<30} | ".format(
