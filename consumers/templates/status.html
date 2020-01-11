@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>CTA Status</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="refresh" content="10">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row" style="padding: 2em">
+        <div class="col-10">
+          <b>Welcome to the CTA Status Page!</b>
+        </div>
+        <div>
+          {{ int(weather.temperature) }}° | {{ weather.status.title().replace("_", " ") }}
+        </div>
+      </div>
+      <div class="row" style="margin: 0px 20px 0px 20px">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Line</th>
+              <th scope="col">Station</th>
+              <th scope="col">Train Direction A</th>
+              <th scope="col">Train Direction B</th>
+              <th scope="col">Total Turnstile Entries</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for color, line in (("blue", lines.blue_line), ("green", lines.green_line), ("red", lines.red_line)) %}
+            {% for station in sorted(line.stations.values(), key=lambda x: x.order) %}
+            <tr>
+              <td style="background-color: {{ line.color_code }}">    </td>
+              <td>{{ station.station_name }}</td>
+              <td>{{ station.dir_a["train_id"] if station.dir_a is not None else "---" }}</td>
+              <td>{{ station.dir_b["train_id"] if station.dir_b is not None else "---" }}</td>
+              <td>{{ station.num_turnstile_entries }}</td>
+            </tr>
+            {% end %}
+            {% end %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

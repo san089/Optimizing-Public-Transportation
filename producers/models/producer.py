@@ -65,15 +65,9 @@ class Producer:
         # the Kafka Broker.
         #
         #
-        print("Inside Topic Creation.....")
         adminclient = AdminClient({'bootstrap.servers': self.broker_properties.get("BROKER_URL")})
         
-        topics = adminclient.list_topics(timeout=10).topics
-        print(f"Already existing topics : {[keys for keys in topics.keys()]}")
-        
-        if self.topic_name in topics.keys():
-            print(f"Topic {self.topic_name} already exists!!")
-            return
+        topics = adminclient.list_topics(timeout=10).topics     
         
         newtopic = NewTopic(
             self.topic_name, 
@@ -82,13 +76,12 @@ class Producer:
         )
         futures = adminclient.create_topics([newtopic])
         
-        
         for topic,future in futures.items():
             try:
                 future.result()
-                print("topics created")
+                logger.debug("topics created")
             except:
-                print(f"failed to create topic {topic_name}: {e}")
+                logger.debug(f"failed to create topic {self.topic_name}")
         
         return
         
@@ -104,9 +97,9 @@ class Producer:
         # TODO: Write cleanup code for the Producer here
         #
         #
-        
+        self.producer.flush(timeout = 10)
         self.producer.close()
-        logger.info("producer close incomplete - skipping")
+        return
 
     def time_millis(self):
         """Use this function to get the key for Kafka Events"""

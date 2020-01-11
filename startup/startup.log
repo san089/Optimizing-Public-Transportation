@@ -1,0 +1,4 @@
+WARNING: Due to limitations in metric names, topics with a period ('.') or underscore ('_') could collide. To avoid issues it is best to use either, but not both.
+Error while executing topic command : Topic 'com.udacity.streams.clickevents' already exists.
+[2020-01-11 20:52:33,001] ERROR org.apache.kafka.common.errors.TopicExistsException: Topic 'com.udacity.streams.clickevents' already exists.
+ (kafka.admin.TopicCommand$)

@@ -112,12 +112,10 @@ class Weather(Producer):
         try:
             resp.raise_for_status()
         except:
-            print(f"Failed to send data to REST Proxy {json.dumps(resp.json(), indent=2)}")
+            logger.info(f"Failed to send data to REST Proxy {json.dumps(resp.json(), indent=2)}")
         
         logger.debug(
             "sent weather data to kafka, temp: %s, status: %s",
             self.temp,
             self.status.name,
         )
-
-#Weather(datetime.now().month).run(datetime.now().month)

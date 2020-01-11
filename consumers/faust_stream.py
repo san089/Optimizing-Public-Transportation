@@ -39,7 +39,7 @@ out_topic = app.topic("faust.stations.transformed", partitions=1, value_type=Tra
 # TODO: Define a Faust Table
 table = app.Table(
     "stations.transformation.table",
-    default=TODO,
+    default=int,
     partitions=1,
     changelog_topic=out_topic,
 )
@@ -52,7 +52,29 @@ table = app.Table(
 # then you would set the `line` of the `TransformedStation` record to the string `"red"`
 #
 #
-
+@app.agent(topic)
+async def StationProcess(stations):
+    
+    async for station in stations:
+        
+        transformed_line = ""
+        if(station.red == True):
+            transformed_line = "red"
+        elif(station.blue == True):
+            transformed_line = "blue"
+        elif(station.green == True):
+            transformed_line = "green"
+        else:
+            transformed_line = "null"
+        
+        transformed_station = TransformedStation(
+                                                station_id=station.station_id,
+                                                station_name=station.station_name,
+                                                order=station.order,
+                                                line=transformed_line
+                                                )
+        await out_topic.send(value=transformed_station)
+    
 
 if __name__ == "__main__":
     app.main()

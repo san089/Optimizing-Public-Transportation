@@ -19,8 +19,6 @@ class Turnstile(Producer):
     # TODO: Define this value schema in `schemas/turnstile_value.json, then uncomment the below
     #
     
-    print(f"{Path(__file__).parents[0]}/schemas/turnstile_value.json")
-    
     value_schema = avro.load(f"{Path(__file__).parents[0]}/schemas/turnstile_value.json")
     
     
@@ -42,7 +40,7 @@ class Turnstile(Producer):
         #
         #
         super().__init__(
-            f"turnstile.{station_name}", 
+            f"turnstile", 
             
             # TODO: Come up with a better topic name
             key_schema=Turnstile.key_schema,
@@ -62,21 +60,24 @@ class Turnstile(Producer):
     def run(self, timestamp, time_step):
         """Simulates riders entering through the turnstile."""
         num_entries = self.turnstile_hardware.get_entries(timestamp, time_step)
-        logger.info("turnstile kafka integration incomplete - skipping")
+        
+        #logger.info("turnstile kafka integration incomplete - skipping")
         #
         #
         # TODO: Complete this function by emitting a message to the turnstile topic for the number
         # of entries that were calculated
         #
         #
-        self.producer.produce(
-        topic=self.topic_name,
-        key_schema = key_schema,
-        value_schema = value_schema,
-        key={"timestamp": self.time_millis()},
-        value={
-                "station_id" : self.station_id,
-                "train_id" : train,
-                "line" : self.station.color.name,
-            },
-        )
+        for i in range(num_entries):
+            
+            self.producer.produce(
+            topic=self.topic_name,
+            key_schema = self.key_schema,
+            value_schema = self.value_schema,
+            key={"timestamp": self.time_millis()},
+            value={
+                    "station_id" : self.station.station_id,
+                    "station_name" : self.station.name,
+                    "line" : self.station.color.name,
+                },
+            )

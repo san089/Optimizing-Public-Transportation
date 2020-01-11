@@ -1,0 +1,3 @@
+confluent-kafka[avro]==1.1.0
+faust==1.7.4
+tornado==6.0.3
