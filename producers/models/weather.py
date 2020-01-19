@@ -33,14 +33,11 @@ class Weather(Producer):
     def __init__(self, month):
         #
         #
-        # TODO: Complete the below by deciding on a topic name, number of partitions, and number of
-        # replicas
+        # Configure the topic below
         #
         #
         super().__init__(
-            topic_name =  "weather",# "weather", 
-            
-            # TODO: Come up with a better topic name
+            topic_name =  "weather",
             key_schema=Weather.key_schema,
             value_schema=Weather.value_schema,
             num_partitions=1,
@@ -59,7 +56,7 @@ class Weather(Producer):
                 Weather.key_schema = json.load(f)
 
         #
-        # TODO: Define this value schema in `schemas/weather_value.json
+        # Define this value schema in `schemas/weather_value.json
         #
         if Weather.value_schema is None:
             with open(f"{Path(__file__).parents[0]}/schemas/weather_value.json") as f:
@@ -99,11 +96,11 @@ class Weather(Producer):
         }
         
         resp = requests.post(
-        
-        #    # TODO: What URL should be POSTed to?
+   
+		# URL to post to
         f"{Weather.rest_proxy_url}/topics/weather",
         
-        #    # TODO: What Headers need to bet set?
+        # Set the header
         headers={"Content-Type":"application/vnd.kafka.avro.v2+json"},
         data=json.dumps(data),
         
