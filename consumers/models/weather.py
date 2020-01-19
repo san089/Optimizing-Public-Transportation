@@ -18,7 +18,7 @@ class Weather:
         logger.info("weather process_message is incomplete - skipping")
         #
         #
-        # TODO: Process incoming weather messages. Set the temperature and status.
+        # Process incoming weather messages. Set the temperature and status.
         #
         #
         try:

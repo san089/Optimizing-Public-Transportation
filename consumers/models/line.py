@@ -56,7 +56,7 @@ class Line:
 
     def process_message(self, message):
         """Given a kafka message, extract data"""
-        # TODO: Based on the message topic, call the appropriate handler.
+        # Based on the message topic, call the appropriate handler.
         topic_name = message.topic()
         
         logger.info(f"Line message polled : {message.value()}")
