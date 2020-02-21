@@ -14,13 +14,14 @@ class Weather:
         self.status = "sunny"
 
     def process_message(self, message):
-        """Handles incoming weather data"""
-        logger.info("weather process_message is incomplete - skipping")
-        #
-        #
-        # Process incoming weather messages. Set the temperature and status.
-        #
-        #
+        """
+        Handles incoming weather data
+        :param message: message to process
+        :return:
+        """
+        logger.info("Processing weather message")
+
+        # Process incoming weather messages.
         try:
             value = json.loads(message.value())
             self.temperature = value.get("temperature")
