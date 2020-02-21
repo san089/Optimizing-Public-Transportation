@@ -12,12 +12,9 @@ logger = logging.getLogger(__name__)
 
 KSQL_URL = "http://localhost:8088"
 
-# Write KSQL
-
 KSQL_STATEMENT = """CREATE TABLE turnstile (STATION_ID INTEGER, STATION_NAME VARCHAR, LINE VARCHAR) WITH ( KAFKA_TOPIC='turnstile', VALUE_FORMAT='avro', key='STATION_ID');
 CREATE TABLE turnstile_summary WITH (KAFKA_TOPIC='TURNSTILE_SUMMARY',VALUE_FORMAT='json') AS SELECT STATION_ID, STATION_NAME, COUNT(STATION_ID) as COUNT FROM turnstile GROUP BY STATION_ID, STATION_NAME;
 """
-
 
 def execute_statement():
     """Executes the KSQL statement against the KSQL API"""

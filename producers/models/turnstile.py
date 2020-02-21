@@ -15,10 +15,7 @@ class Turnstile(Producer):
     
     key_schema = avro.load(f"{Path(__file__).parents[0]}/schemas/turnstile_key.json")
 
-    #
-    # Define this value schema in `schemas/turnstile_value.json
-    #
-    
+    # Schema defined in `schemas/turnstile_value.json
     value_schema = avro.load(f"{Path(__file__).parents[0]}/schemas/turnstile_value.json")
     
     
@@ -33,20 +30,11 @@ class Turnstile(Producer):
             .replace("'", "")
         )
 
-        #
-        #
-        # Configure the topic below.
-        #
-        #
         super().__init__(
-            f"turnstile", 
-            
+            f"turnstile",
             key_schema=Turnstile.key_schema,
-            
-            value_schema=Turnstile.value_schema, 
-            
+            value_schema=Turnstile.value_schema,
             num_partitions=1,
-            
             num_replicas=1,
         )
         self.station = station
@@ -55,13 +43,8 @@ class Turnstile(Producer):
     def run(self, timestamp, time_step):
         """Simulates riders entering through the turnstile."""
         num_entries = self.turnstile_hardware.get_entries(timestamp, time_step)
-        
-        #logger.info("turnstile kafka integration incomplete - skipping")
-        #
-        #
+
         # Emitting a message to the turnstile topic for the number of entries that were calculated
-        #
-        #
         for i in range(num_entries):
             
             self.producer.produce(

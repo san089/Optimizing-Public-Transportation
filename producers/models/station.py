@@ -17,9 +17,7 @@ class Station(Producer):
 
     key_schema = avro.load(f"{Path(__file__).parents[0]}/schemas/arrival_key.json")
 
-    #
-    # Define this value schema in `schemas/station_value.json
-    #
+    # Schema defined in `schemas/station_value.json
     value_schema = avro.load(f"{Path(__file__).parents[0]}/schemas/arrival_value.json")
 
     def __init__(self, station_id, name, color, direction_a=None, direction_b=None):
@@ -71,8 +69,6 @@ class Station(Producer):
                 "prev_direction" : prev_direction
             }
         )
-        
-        #logger.info("arrival kafka integration incomplete - skipping")
 
     def __str__(self):
         return "Station | {:^5} | {:<30} | Direction A: | {:^5} | departing to {:<30} | Direction B: | {:^5} | departing to {:<30} | ".format(

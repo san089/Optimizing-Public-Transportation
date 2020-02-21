@@ -1,8 +1,4 @@
-"""Defines a time simulation responsible for executing any registered
-producers
-"""
-
-"Hello world"
+"""Defines a time simulation responsible for executing any registered producers"""
 
 import datetime
 import time

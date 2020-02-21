@@ -32,7 +32,7 @@ class Producer:
         self.num_replicas = num_replicas
 
         
-        # Configure the broker properties below. 
+        # Broker properties
         self.broker_properties = {
             "ZOOKEEPER_URL" : "localhost:2181",
             "BROKER_URL" : "localhost:9092",
@@ -44,7 +44,6 @@ class Producer:
             self.create_topic()
             Producer.existing_topics.add(self.topic_name)
 
-        # Configure the AvroProducer
         self.producer = AvroProducer({
             'bootstrap.servers': self.broker_properties.get("BROKER_URL"),
             'schema.registry.url' : self.broker_properties.get("SCHEMA_REGISTRY_URL")
@@ -55,7 +54,6 @@ class Producer:
 
     def create_topic(self):
         """Creates the producer topic if it does not already exist"""
-        # create the topic for this producer if it does not already exist on the Kafka Broker.
         adminclient = AdminClient({'bootstrap.servers': self.broker_properties.get("BROKER_URL")})
         
         topics = adminclient.list_topics(timeout=10).topics     
@@ -75,15 +73,14 @@ class Producer:
                 logger.debug(f"failed to create topic {self.topic_name}")
         
         return
-        
-        logger.info("topic creation kafka integration incomplete - skipping")
 
     def time_millis(self):
         return int(round(time.time() * 1000))
 
     def close(self):
-        """Prepares the producer for exit by cleaning up the producer"""
-        
+        """
+         Prepares the producer for exit by cleaning up the producer
+        """
 		# cleanup code for the Producer here
         self.producer.flush(timeout = 10)
         self.producer.close()

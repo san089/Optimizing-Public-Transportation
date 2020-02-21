@@ -1,5 +1,5 @@
 {
-  "namespace": "com.udacity",
+  "namespace": "com.transport",
   "type": "record",
   "name": "weather.key",
   "fields": [

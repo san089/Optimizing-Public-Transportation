@@ -63,7 +63,7 @@ def run_server():
     
     print("Building consumers....")
     
-    # Build kafka consumers
+    # Kafka consumers for the application
     consumers = [
         KafkaConsumer(
             "weather",

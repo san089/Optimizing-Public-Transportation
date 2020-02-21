@@ -3,7 +3,11 @@ from confluent_kafka.admin import AdminClient
 client = AdminClient({"bootstrap.servers": "PLAINTEXT://localhost:9092"})
 
 def topic_exists(topic):
-    """Checks if the given topic exists in Kafka"""
+    """
+    Checks if the given topic exists in Kafka
+    :param topic: topic_name to check
+    :return: true if topic exists else False
+    """
     topic_metadata = client.list_topics(timeout=5)
     return topic in topic_metadata.topics
 
@@ -13,9 +17,9 @@ def contains_substring(to_test, substr):
 
 def topic_pattern_match(pattern):
     """
-        Takes a string `pattern`
-        Returns `True` if one or more topic names contains substring `pattern`.
-        Returns `False` if not.
+    Takes a string `pattern`
+    Returns `True` if one or more topic names contains substring `pattern`.
+    Returns `False` if not.
     """
     topic_metadata = client.list_topics()
     topics = topic_metadata.topics
