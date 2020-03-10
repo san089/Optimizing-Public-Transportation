@@ -6,6 +6,14 @@
 #### Overview
 In this project we construct a streaming event pipeline around Apache Kafka and its ecosystem. Using public dataset from [Chicago Transit Authority](https://www.transitchicago.com/data/) we constructed an event pipeline around Kakfa that allows to simulate and display status of train in real time.
 
+Arrival and Turnstiles -> Producers that create train arrival and turnstile information into our kafka cluster. Arrivals indicate that a train has arrived at a particular station while the turnstile event indicate a passanger has entered the station. 
+
+Weather -> A REST Proxy prodcer that periodically emits weather data by a REST Proxy and emits that to the kafka cluster.
+
+Postgres SQL and Kafka Connect -> Extract data from stations and push it to kafka cluster. 
+
+Kafka status server -> Consumes data from kafka topics and display on the UI.
+
 ![Results](https://github.com/san089/Optimizing-Public-Transportation/blob/master/docs/results.png)
 
 ### Environment 
