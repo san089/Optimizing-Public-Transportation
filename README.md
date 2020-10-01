@@ -16,11 +16,11 @@ In this project we construct a streaming event pipeline around Apache Kafka and 
 
 ![Results](https://github.com/san089/Optimizing-Public-Transportation/blob/master/docs/results.png)
 
-### Environment 
+#### Environment 
 -   Docker (I used bitnami kafka image available [here](https://hub.docker.com/r/bitnami/kafka)
 -   Python 3.7
 
-### Running and Testing
+#### Running and Testing
 First make sure all the service are up and running: 
 For docker use:
 
